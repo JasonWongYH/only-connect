@@ -1,0 +1,117 @@
+Project Summary 
+Given the increasing density of tall buildings and the time spent in such places by a sizeable subset of the population, effective building evacuation and personnel accountability will be more important for the safety of Singapore’s workforce. In an emergency, it can be a question of life and death to quickly locate and escape through the nearest fire exits.
+
+This mobile app will use indoor geolocation capabilities to help people within buildings 
+
+(i) find their nearest exits within the building
+(ii) account for people who have left the building
+(iii) allow urgent notifications and emergency instructions to be pushed to people in the building by SCDF, building management and other authorities 
+
+This is an innovative use of mobile technologies and geolocation for the safety and security of people in Singapore during fires, terrorist attacks or other scenarios which require quick evacuation. 
+
+Project Description
+The mobile app will have the following features:
+
+Feature 1: Users are able to find the nearest fire escape using Indoor Positioning
+
+Modern buildings all have a unique magnetic landscape produced by the Earth’s magnetic field that interacts with steel and other materials found in structures of buildings. By utilizing the built-in magnetic sensor (the compass) as well as other sensing technologies within a smartphone, indoor positioning platforms are able to use the magnetic field inside the building as a map to accurately pinpoint and track a person’s location indoors, producing a “blue dot” on a map. 
+
+The indoor position of a user will be overlayed on a floorplan provided by the building management in order for the user to identify the nearest fire escape using the app.
+
+Feature 2: Authorities are able to automatically account for users who have left the building
+
+A key difficulty for authorities in the event of a fire or emergency situation is to account for people who have safely left the building. 
+
+The Escape App is able to automate this process if
+
+(i) Participating building management require all tenants in the building to download the escape app and register that they work in the building
+
+(ii) Through a Geofencing setup, the Escape App is able to positively identify all registered userrs who are no longer within the Geofence
+
+Feature 3: Authorities are able to push notifications to Users during an emergency
+
+There is often confusion during an emergency and persons affected require authoritative and clear communication. These instructions are currently most often relayed through a building communication system. 
+
+The Escape App is able to enhance and provide a backup to the building communication system by pushing notifications and relevant information direct to registered users mobile phones.
+
+Feature 4: Merchants are able to push localized offers to Users within a building
+
+To allow the Escape App to be commercially sustainable, it requires a revenue model. Provided building managements are able to encourage a large number of tenants to download and register on the Escape App, the Escape App would allow nearby merchants (such as restaurants) a valuable advertising platform to push localized offers to a captive audience.
+
+This revenue model would allow further enhancements to the Escape App to provide further utility to Authorities and Users in the event of an emergency in future phases of work, including:
+
+(i) Showing the user the best path to the fire escape (this requires an intelligent path search algorithm)
+
+(ii) Rolling out of the Escape App to many buildings so that the App will work with most commercial buildings in Singapore 
+
+Roll Out
+
+With the Geospatial grant, the team intends to engage SCDF and building managements to first pilot the Escape App beginning with the Android platform in selected buildings and ensure that the Indoor Positioning technology works robustly.
+
+A typical application and use procedure for each building is described below.. 
+
+Once the geospatial capabilities have been refined and developed, interiors of buildings and its tenants can be mapped. Provided that building management buys into the idea and encourage most tenants to download and register on the Escape App, this allows shops such as cafes, restaurants, laundromats, salons and other services to advertise their offers (such as lunch menus and other special promotions) on the app for the building tenants. 
+
+Innovation
+
+There are several limitations to current indoor positioning technologies:
+
+1.GPS loses significant power indoors affecting the required coverage.Hence, GPS is not effective indoors and so the current crop of positioning technologies are riddled with blind spots when a user goes indoors. More fine grained indoor localization requires low power motion sensors and environment sensors already bundled in the Android phones
+
+2.It is challenging to use geomagnetic fields for positioning because the field is distorted locally near various objects e.g. ferromagnetic walls, appliances, etc. The distortion is given in terms of a heading error from magnetic north, and is spatially varying while temporally stable [1]. However, turning it around, these local distortions can be used as landmarks to estimate a user’s position.  
+
+3. Inertial motion sensors in the smartphone used for dead reckoning accumulate errors very quickly and on their own are not practical for path tracking.
+
+4. IndoorAtlas [5] is a tool for users to upload a magnetic map and floorplan. Google has its own Floor Plan Marker that lets the public upload a floorplan. However these are passive isolated tools requiring a user to initiate an action. They’re not systems that prepare the groundwork for a ‘smart building’. Our proposed idea would scale if most tenants do their part with a one-off configuration step that can take place as part of a typical staff meeting. It fosters iterative community involvement in its deployment. Statistically, we don’t expect all staff at every tenant to comply with the setup protocol (e.g. staff who don’t hold the phone steady during the configuration step), but as long as enough do, we’ve got good coverage of people flows inside and near a given building. 
+
+[6] is closer to what we’re proposing but it uses a bespoke ultra wideband radio frequency (UWB RF) technology for firefighters that isn’t readily available or integrable into off the shelf Android phones.
+
+With the right sensor fusion and error correction, the limitations above can be removed.
+
+*. Use of the compass: using both magnitude and direction. The difference between the compass’s reported vector at a point and the average magnitude and direction of geomagnetic north over a suitable geofence centered on the building gives a plausible fingerprint.
+
+*. Use of the barometer: to infer floor transitions: typical Android phones have a 1m sensitivity to height changes in a building and typical heights of floors are much higher. Knowing which floor a user is on gives around 80% of the utility of localization within a building already.
+
+*. Use of the accelerometer and gyroscope: for dead reckoning (DR) constrained by the floorplan to correct DR error drift e.g. if after 100 steps, the 101st step would take me through a wall (based on the floorplan given), then the 101st step must be a turn. Furthermore, when a user is near a window (as given by the floorplan) the GPS sensor activates to try and fix a known geocoordinate which can be to correct estimated path segments.
+
+*. In the event of a fire, the app is activated either manually or configured to run in the background listening for notifications from SCDF or building security or a peer to peer broadcast. 
+
+*. When the app runs, it tries to download (or get from its cache) the merged magnetic map and floorplan of the building the user is in, and locates the user as well as the nearestexits given on the floorplan.
+
+The nearest exits might be obstructed, and the app learns this from the paths other users have taken: if no other user nearby has used the nearest exit, that implies its obstructed and the app would find the next shortest exit; if the rate of flow at an exit is too slow, that hints at a bottleneck and the app would find the next shortest exit instead.
+
+*. Given the risk of privacy and security breaches in tracking the public without consent, the
+system doesn’t need to track everyone yet can infer crowd anomalies from the public’s interaction with tenant staff since the locations of staff throughout the building are known. Tenant staff, on the other hand, are at work and it’s reasonable to expect colleagues to know our whereabouts during work hours.
+
+For example, bottlenecks forming during the rush hour (e.g. lunch time) that can potentially be disastrous in a sudden emergency would be reflected in the rates of flows of tenant staff near the escalators, lifts, walkways, etc. 
+
+A corollary to visualizing the flows of staff movement throughout a building over time is allowing for dynamic contingency planning: when are lifts heavily used, which corridors and walkways are crowded at what times of day, etc. 
+
+References
+
+[1] http://www.media.mit.edu/speech/papers/2011/positioning.systems.pdf
+[2] http://affect.media.mit.edu/software.php ->https://github.com/jackylee0424/Attention-Meter
+[3] http://www.cl.cam.ac.uk/~ab818/StepDetectionSmartphones.pdf
+[4] https://github.com/CMU-15-239/NavPalFloorplans
+[5] https://www.indooratlas.com/ , http://finance.yahoo.com/news/opus-research-finds-indooratlas-technology-113000334.html
+[6] www.chirange.com/geospatial-rescue-technologies
+
+Appendix
+
+The setup protocol is as follows:
+
+*. Tenant manager downloads the app and uses it to construct a magnetic map of the rented space (e.g. an office, a store, a cafe, etc) by following a set protocol of walking along the paths defined by walls with the phone held in a fixed position and the app sampling the magnetometer at evenly spaced intervals. The magnetic map is sent to a server as a reference. The floorplan of the tenant’s workspace is obtained from the building developer and uploaded to the server too. On the server, the magnetic map and floorplan are merged.
+
+*. Tenant staff download the app and install it. The installation wizard would ask that a user holds the phone in a fixed position (screen flat facing skywards much as when a user is reading with it) and walk naturally for 2 mins to learn a user’s specific walk pattern. Most normal walking falls within a narrow band of frequencies and the app looks within this band to infer footsteps.
+
+
+
+
+
+
+                  
+
+
+
+
+
